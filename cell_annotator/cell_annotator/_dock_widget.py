@@ -14,8 +14,6 @@ from operator import invert
 from PyQt5.QtWidgets import QMainWindow
 sys.path.append(
     '/home/slimane/Desktop/Big_Annotator/bigannotator/NEW/bigannotator/pretrained models')
-sys.path.append(
-    '/home/slimane/Desktop/Big_Annotator/bigannotator/NEW/bigannotator/pretrained models/Unet/unet_CellSegmentation-master')
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -535,7 +533,6 @@ class segmentation (QMainWindow):
         on which a local or dynamic thresholding is calculated. 
     - Choose an advanced segmentation method:
         "StarDist": image segmentation using pretrained StarDist algorithm.
-        "Unet": image segmentation using pretrained Unet algorithm.
         "Cellpose": image segmentation using pretrained Cellpose algorithm.
     - Choose a StarDist_image_type :
         '2D_versatile_fluo' & '2D_paper_dsb2018': Versatile (fluorescent nuclei) and DSB 2018 
@@ -654,7 +651,6 @@ class segmentation (QMainWindow):
         self.Label_advanced = QLabel(self)
         self.Label_advanced.setText('advanced segmentation')
         self.qle_advanced = QComboBox(self)
-        self.qle_advanced.addItem('Unet')
         self.qle_advanced.addItem('StarDist')
         self.qle_advanced.addItem('cellpose')
         self.qle_advanced.setFixedSize(200,25)
@@ -855,9 +851,7 @@ class segmentation (QMainWindow):
                 self.param_hough = {"cell_mean":self.window1.cell_mean,"verbose":self.window1.verbose,"out_dir":self.window1.out_dir}
                 hough_segmentation(self.viewer, self.image_name, self.shape_name,self.param_hough)
         else:
-            if self.advanced_method == "Unet":
-                Unet_segmentation(self.viewer, self.image_name, self.shape_name)
-            elif self.advanced_method == "StarDist":
+            if self.advanced_method == "StarDist":
                 stardist_segmentation(self.viewer, self.image_name, self.shape_name, self.StarDist_image_type)  
             else: 
                 self.param = {"pretrained_pkl":self.window.pretrained_pkl,"GPU":self.window.gpu,"model_type":self.window.model_type,

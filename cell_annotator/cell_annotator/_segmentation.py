@@ -411,45 +411,6 @@ def cellpose_segmentation(viewer, img_name, sh_name,param):
                                     stitch_threshold=0.0, progress=None)
     viewer.add_image(flows[0], name = 'flow')
     viewer.add_labels(masks, name = 'mask')
-
-def Unet_segmentation(viewer, img_name,sh_name):
-    """This function does image segmentation using pretrained Unet algorithm.
-    Parameters
-    ----------
-    viewer : object 
-        napari.Viewer object that includes all the data added to napari.  
-    img_name : str
-        name of the selected Image layer. 
-    sh_name : str
-        name of the selected Shapes layer. 
-    """
-
-    directory = Path(os.path.dirname(os.path.abspath('_segmentation.py')))
-    print(str(directory))
-    # model_path = str(directory.parent.absolute()) + '/pretrained models/Unet_contour_assist/models/model_real.json'
-    model_path = str(directory) + '/pretrained models/Unet_contour_assist/models/model_real.json'
-    weight_path = str(directory) + '/pretrained models/Unet_contour_assist/models/model_real_weights.h5'
-    # load json and create model    
-    json_file = open(model_path, 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    # load weights into new model
-    loaded_model.load_weights(weight_path)
-    print("Loaded model from disk")
-    im = patch_extraction(viewer, img_name, sh_name)
-    if im.dtype == 'uint16':
-        im = img_as_ubyte(im)        
-    img = np.array(Im.fromarray(im).resize((256,256)))
-    tmp = np.zeros((1,256,256,3))
-    tmp[0,:,:,0] = tmp[0,:,:,1] = tmp[0,:,:,2] = img  
-    label_= loaded_model.predict(tmp)
-    label_1 = label_.reshape((256,256))
-    th = threshold_otsu(label_1)
-    mask = label_1 < th
-    mask = np.array(Im.fromarray(mask).resize((im.shape[1],im.shape[0])))
-    viewer.add_labels(mask, name='Unet_mask')
-    viewer.add_labels(label(mask), name='Unet_labels')    
     
 # Region Growing segmentation algorithm
 
