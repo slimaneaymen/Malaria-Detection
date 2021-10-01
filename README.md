@@ -2,7 +2,7 @@
 This is a project to Detect malaria. The interactive graphical user interface (Napari plugin) developed allows you to: Reconstruct high resolution images from low resolution ones, and to retrieve phase information using Fourier Ptychography Microscopy,  segment red blood cells using (classic,advanced) algorithms, classify cells into healthy/infected, visualize the results, and allows for individual control of blood cells at the various imaging, processing and classification steps. 
 
 
-##Setup
+## Setup
 
 1- You should first create a virtual envirement (in my case I used conda):
    `conda create -n yourenvname python=3.8.10 anaconda`
