@@ -1,0 +1,5 @@
+# Local cache
+.eggs/
+__pycache__/
+*.egg-info/
+_version.py
